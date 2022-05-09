@@ -1,13 +1,15 @@
+import 'dart:convert';
+
 import 'package:instattendance_admin/constants/repository_constants.dart';
 import 'package:instattendance_admin/models/subject_model.dart';
 import 'package:http/http.dart' as http;
 
 class SubjectRepository {
   Future<Subject?> addSubject(Subject subject, String className) async {
-    var body = {
+    var body = jsonEncode({
       "name": subject.name,
       "className": {"className": className}
-    };
+    });
 
     var response = await http.post(
       Uri.parse('${RepositoryConstants.baseUrl}/subjects'),

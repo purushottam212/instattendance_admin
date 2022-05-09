@@ -7,12 +7,12 @@ class SubjectService {
 
   Future<Subject?> addSubject(Subject subject, String className) async {
     Subject? addSub;
-
-    try {
+    addSub = await _subjectRepository.addSubject(subject, className);
+    /*try {
       addSub = await _subjectRepository.addSubject(subject, className);
     } catch (e) {
       DisplayMessage.showMsg(e.toString());
-    }
+    }*/
 
     return addSub;
   }

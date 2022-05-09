@@ -8,7 +8,7 @@ import 'package:instattendance_admin/models/division_model.dart';
 import 'package:instattendance_admin/widget/custom_button.dart';
 import 'package:instattendance_admin/widget/selection_box_widget.dart';
 import 'package:instattendance_admin/widget/show_toast.dart';
-import 'package:instattendance_admin/widget/student_list.dart';
+import 'package:instattendance_admin/view/entities_management/student/student_list.dart';
 
 class StudentManagement extends StatefulWidget {
   const StudentManagement({Key? key}) : super(key: key);

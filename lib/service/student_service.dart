@@ -13,6 +13,7 @@ class StudentService {
       addStudent = await _studentRepository.addStudent(student);
     } catch (e) {
       DisplayMessage.showMsg(e.toString());
+      print(e.toString());
     }
     return addStudent;
   }

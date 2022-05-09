@@ -100,7 +100,7 @@ class AddStudentForm extends StatelessWidget {
                 msg: 'Add Student',
                 icon: Icons.add,
                 onTap: () async {
-                  await addStudent();
+                  await addStudent(context);
                 },
               )
             ],
@@ -110,7 +110,7 @@ class AddStudentForm extends StatelessWidget {
     );
   }
 
-  Future addStudent() async {
+  Future addStudent(BuildContext context) async {
     if (_nameController.text.isNotEmpty &&
         _prnController.text.isNotEmpty &&
         _rollController.text.isNotEmpty) {
@@ -136,6 +136,7 @@ class AddStudentForm extends StatelessWidget {
         _studentController.studentsByClassAndDiv.add(addedStud);
 
         DisplayMessage.showMsg('student added');
+        Navigator.of(context).pop();
       }
     }
   }

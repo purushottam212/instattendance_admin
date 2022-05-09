@@ -15,12 +15,12 @@ String deptClassToJson(List<DeptClass> data) =>
 class DeptClass {
   DeptClass({
     this.id,
-    this.className,
+    required this.className,
     this.subjects,
   });
 
   int? id;
-  String? className;
+  String className;
   List<Subject>? subjects;
 
   factory DeptClass.fromJson(Map<String, dynamic> json) => DeptClass(

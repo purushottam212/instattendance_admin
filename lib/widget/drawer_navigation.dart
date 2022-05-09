@@ -80,6 +80,9 @@ class NavDrawer extends StatelessWidget {
                       const TeachersManagement()));
             },
           ),
+          const Divider(
+            color: Colors.grey,
+          ),
           ListTile(
             title: const Text("Manage Classes"),
             leading: IconButton(
@@ -89,9 +92,11 @@ class NavDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      const ClassesManagement()));
+                  builder: (BuildContext context) => ClassesManagement()));
             },
+          ),
+          const Divider(
+            color: Colors.grey,
           ),
           ListTile(
             title: const Text("Manage Divisions"),
@@ -102,9 +107,11 @@ class NavDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      const DivisionsManagement()));
+                  builder: (BuildContext context) => DivisionsManagement()));
             },
+          ),
+          const Divider(
+            color: Colors.grey,
           ),
           ListTile(
             title: const Text("Manage Subjects & Practicals"),
@@ -118,7 +125,10 @@ class NavDrawer extends StatelessWidget {
                   builder: (BuildContext context) =>
                       const SubjectsManagement()));
             },
-          )
+          ),
+          const Divider(
+            color: Colors.grey,
+          ),
         ],
       ),
     );

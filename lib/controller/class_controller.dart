@@ -14,5 +14,14 @@ class ClassController extends GetxController {
     }
   }
 
-  Future<DeptClass?> addClass(DeptClass classDetails) async {}
+  Future<DeptClass?> addClass(DeptClass classDetails) async {
+    DeptClass? addedClass = await _classService.addClass(classDetails);
+    if (addedClass != null) {
+      return addedClass;
+    }
+  }
+
+  Future<String> deleteClass(int? id) async {
+    return _classService.deleteClass(id!);
+  }
 }

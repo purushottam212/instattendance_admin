@@ -14,6 +14,7 @@ class SelectionBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: Row(
+        //mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // const Text('Class:'),
           Container(

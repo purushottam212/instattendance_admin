@@ -46,20 +46,22 @@ class Student {
 class StudentClass {
   StudentClass({
     required this.className,
-    required this.students,
+    this.students,
   });
 
   String className;
-  List<dynamic> students;
+  List<dynamic>? students;
 
   factory StudentClass.fromJson(Map<String, dynamic> json) => StudentClass(
         className: json["className"],
-        students: List<dynamic>.from(json["students"].map((x) => x)),
+        students: List<dynamic>.from(
+            json["students"] == null ? [] : json["students"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
         "className": className,
-        "students": List<dynamic>.from(students.map((x) => x)),
+        "students":
+            students == null ? [] : List<dynamic>.from(students!.map((x) => x)),
       };
 }
 
@@ -75,11 +77,13 @@ class StudentDivision {
   factory StudentDivision.fromJson(Map<String, dynamic> json) =>
       StudentDivision(
         divisionName: json["divisionName"],
-        students: List<dynamic>.from(json["students"].map((x) => x)),
+        students: List<dynamic>.from(
+            json["students"] == null ? [] : json["students"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
         "divisionName": divisionName,
-        "students": List<dynamic>.from(students.map((x) => x)),
+        "students":
+            students == null ? [] : List<dynamic>.from(students.map((x) => x)),
       };
 }
