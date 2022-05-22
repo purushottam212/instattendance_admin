@@ -7,6 +7,7 @@ import 'package:instattendance_admin/models/class_model.dart';
 import 'package:instattendance_admin/models/subject_model.dart' as sub;
 
 import 'package:instattendance_admin/widget/alert_dialog.dart';
+import 'package:instattendance_admin/widget/common_appbar.dart';
 import 'package:instattendance_admin/widget/custom_button.dart';
 import 'package:instattendance_admin/widget/selection_box_widget.dart';
 import 'package:instattendance_admin/widget/show_toast.dart';
@@ -25,6 +26,7 @@ class _SubjectsManagementState extends State<SubjectsManagement> {
   var _selectedClass;
   int? _selectedClassId;
   bool _showSubjectList = false;
+  bool? isSwitched = false;
 
   @override
   void initState() {
@@ -49,9 +51,7 @@ class _SubjectsManagementState extends State<SubjectsManagement> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Subjects & Practicals Management'),
-      ),
+      appBar: appbar('Subjects & Practicals Management', context),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -86,6 +86,7 @@ class _SubjectsManagementState extends State<SubjectsManagement> {
                         setState(() {
                           _selectedClass = deptClass!.className.toString();
                           _selectedClassId = deptClass.id!;
+                          _subjectController.subByClass.clear();
                         });
                       },
                     ),
@@ -114,8 +115,7 @@ class _SubjectsManagementState extends State<SubjectsManagement> {
                       decoration: BoxDecoration(border: Border.all(width: 0.6)),
                       padding: const EdgeInsets.all(28),
                       child: Obx(() => (_subjectController.subByClass.isEmpty
-                          ? const Text(
-                              'No subject found,add subject by hitting below button!!')
+                          ? Container()
                           : ListView.builder(
                               shrinkWrap: true,
                               itemCount: _subjectController.subByClass.length,
@@ -160,6 +160,21 @@ class _SubjectsManagementState extends State<SubjectsManagement> {
                               }))),
                     ),
                   ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Is It Practical?'),
+                Checkbox(
+                  value: isSwitched,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isSwitched = value;
+                    });
+                  },
+                ),
+              ],
+            ), //Check
             CustomButton(
               msg: 'Add Subject',
               icon: Icons.add,
@@ -185,7 +200,8 @@ class _SubjectsManagementState extends State<SubjectsManagement> {
 
   Future addSubject(BuildContext context) async {
     if (_subNameController.text.isNotEmpty && _selectedClass != null) {
-      sub.Subject subj = sub.Subject(name: _subNameController.text);
+      sub.Subject subj =
+          sub.Subject(name: _subNameController.text, isPractical: isSwitched);
 
       sub.Subject? addedSub =
           await _subjectController.addSubject(subj, _selectedClass);

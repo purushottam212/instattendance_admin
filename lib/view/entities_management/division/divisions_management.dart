@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:instattendance_admin/controller/division_controller.dart';
 import 'package:instattendance_admin/models/division_model.dart';
 import 'package:instattendance_admin/widget/alert_dialog.dart';
+import 'package:instattendance_admin/widget/common_appbar.dart';
 import 'package:instattendance_admin/widget/custom_button.dart';
 import 'package:instattendance_admin/widget/show_toast.dart';
 
@@ -13,9 +14,7 @@ class DivisionsManagement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Divisions Management'),
-      ),
+      appBar: appbar('Divisions Management', context),
       body: FutureBuilder(
         future: _divController
             .getAllDivisions(), // function where you call your api
@@ -39,45 +38,54 @@ class DivisionsManagement extends StatelessWidget {
                         decoration:
                             BoxDecoration(border: Border.all(width: 0.6)),
                         padding: const EdgeInsets.all(28),
-                        child: Obx(() => (ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: _divController.divisions.length,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                        child: Obx(() => (_divController.divisions.isEmpty
+                            ? const Center(
+                                child: Text(
+                                    'Divisions are not added yet,,add division by hitting below button'),
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: _divController.divisions.length,
+                                itemBuilder: (context, index) {
+                                  return Column(
                                     children: [
-                                      Text(_divController
-                                          .divisions[index].divisionName
-                                          .toString()),
-                                      IconButton(
-                                          onPressed: () async {
-                                            String res = await _divController
-                                                .deleteDivision(_divController
-                                                    .divisions[index].id);
-                                            DisplayMessage.showMsg(res);
-                                            if (res == "Deleted Division") {
-                                              _divController.divisions.remove(
-                                                  _divController
-                                                      .divisions[index]);
-                                            }
-                                          },
-                                          icon: const Icon(Icons.delete,
-                                              color: Colors.redAccent,
-                                              size: 16))
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(_divController
+                                              .divisions[index].divisionName
+                                              .toString()),
+                                          IconButton(
+                                              onPressed: () async {
+                                                String res =
+                                                    await _divController
+                                                        .deleteDivision(
+                                                            _divController
+                                                                .divisions[
+                                                                    index]
+                                                                .id);
+                                                DisplayMessage.showMsg(res);
+                                                if (res == "Deleted Division") {
+                                                  _divController.divisions
+                                                      .remove(_divController
+                                                          .divisions[index]);
+                                                }
+                                              },
+                                              icon: const Icon(Icons.delete,
+                                                  color: Colors.redAccent,
+                                                  size: 16))
+                                        ],
+                                      ),
+                                      const Divider(
+                                        color: Colors.grey,
+                                      ),
+                                      const SizedBox(
+                                        height: 18,
+                                      ),
                                     ],
-                                  ),
-                                  const Divider(
-                                    color: Colors.grey,
-                                  ),
-                                  const SizedBox(
-                                    height: 18,
-                                  ),
-                                ],
-                              );
-                            }))),
+                                  );
+                                }))),
                       ),
                       CustomButton(
                         msg: 'Add Division',

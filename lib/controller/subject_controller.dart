@@ -17,9 +17,8 @@ class SubjectController extends GetxController {
 
   Future getSubjectByClass(String className) async {
     var getAllSub = await _subjectService.getSubjectByClass(className);
-
+    subByClass.clear();
     if (getAllSub != null) {
-      subByClass.clear();
       subByClass.assignAll(getAllSub);
     }
   }

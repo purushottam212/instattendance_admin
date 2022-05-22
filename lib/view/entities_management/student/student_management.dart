@@ -5,6 +5,7 @@ import 'package:instattendance_admin/controller/division_controller.dart';
 import 'package:instattendance_admin/controller/student_controller.dart';
 import 'package:instattendance_admin/models/class_model.dart';
 import 'package:instattendance_admin/models/division_model.dart';
+import 'package:instattendance_admin/widget/common_appbar.dart';
 import 'package:instattendance_admin/widget/custom_button.dart';
 import 'package:instattendance_admin/widget/selection_box_widget.dart';
 import 'package:instattendance_admin/widget/show_toast.dart';
@@ -51,9 +52,7 @@ class _StudentManagementState extends State<StudentManagement> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Student Management'),
-      ),
+      appBar: appbar('Student Management', context),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -139,7 +138,9 @@ class _StudentManagementState extends State<StudentManagement> {
             ),
             _showStudentList
                 ? StudentList(
-                    studList: _studentController.studentsByClassAndDiv,selectedclass: _selectedClass,selectedDiv: _selectedDivision)
+                    studList: _studentController.studentsByClassAndDiv,
+                    selectedclass: _selectedClass,
+                    selectedDiv: _selectedDivision)
                 : Container()
           ],
         ),

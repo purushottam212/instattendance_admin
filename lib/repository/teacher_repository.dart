@@ -45,7 +45,7 @@ class TeacherRepository {
 
   Future<List<Teacher>?> getAllTeacher() async {
     var response = await http.get(
-      Uri.parse('${RepositoryConstants.baseUrl}//teachers'),
+      Uri.parse('${RepositoryConstants.baseUrl}/teachers'),
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
       },

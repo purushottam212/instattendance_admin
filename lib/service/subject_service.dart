@@ -5,14 +5,16 @@ import 'package:instattendance_admin/widget/show_toast.dart';
 class SubjectService {
   final SubjectRepository _subjectRepository = SubjectRepository();
 
-  Future<Subject?> addSubject(Subject subject, String className) async {
+  Future<Subject?> addSubject(
+      Subject subject, String className) async {
     Subject? addSub;
-    addSub = await _subjectRepository.addSubject(subject, className);
-    /*try {
+   /* addSub =
+        await _subjectRepository.addSubject(subject, className,);*/
+    try {
       addSub = await _subjectRepository.addSubject(subject, className);
     } catch (e) {
       DisplayMessage.showMsg(e.toString());
-    }*/
+    }
 
     return addSub;
   }

@@ -7,12 +7,12 @@ class TeacherService {
 
   Future<Teacher?> addTeacher(Teacher teacher) async {
     Teacher? addTeacher;
-
-    try {
+    addTeacher = await _teacherRepository.addTeacher(teacher);
+    /* try {
       addTeacher = await _teacherRepository.addTeacher(teacher);
     } catch (e) {
       DisplayMessage.showMsg(e.toString());
-    }
+    }*/
 
     return addTeacher;
   }
@@ -31,12 +31,12 @@ class TeacherService {
 
   Future<List<Teacher>?> getAllTeacher() async {
     List<Teacher>? getAllTeacher;
-
-    try {
+    getAllTeacher = await _teacherRepository.getAllTeacher();
+    /* try {
       getAllTeacher = await _teacherRepository.getAllTeacher();
     } catch (e) {
       DisplayMessage.showMsg(e.toString());
-    }
+    }*/
 
     return getAllTeacher;
   }

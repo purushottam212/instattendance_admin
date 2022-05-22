@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:instattendance_admin/view/entities_management/class/classes_management.dart';
 import 'package:instattendance_admin/view/entities_management/division/divisions_management.dart';
 import 'package:instattendance_admin/view/entities_management/student/student_management.dart';
 import 'package:instattendance_admin/view/entities_management/subject/subject_management.dart';
 import 'package:instattendance_admin/view/entities_management/teacher/teacher_management.dart';
 import 'package:instattendance_admin/view/homepage_view/home.dart';
+import 'package:instattendance_admin/view/settings_view/settings.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({Key? key}) : super(key: key);
@@ -76,8 +78,7 @@ class NavDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      const TeachersManagement()));
+                  builder: (BuildContext context) => TeachersManagement()));
             },
           ),
           const Divider(
@@ -124,6 +125,21 @@ class NavDrawer extends StatelessWidget {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) =>
                       const SubjectsManagement()));
+            },
+          ),
+          const Divider(
+            color: Colors.grey,
+          ),
+          ListTile(
+            title: const Text("Settings"),
+            leading: IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {},
+            ),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => Settings()));
             },
           ),
           const Divider(

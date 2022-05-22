@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:instattendance_admin/controller/class_controller.dart';
 import 'package:instattendance_admin/models/class_model.dart';
 import 'package:instattendance_admin/widget/alert_dialog.dart';
+import 'package:instattendance_admin/widget/common_appbar.dart';
 import 'package:instattendance_admin/widget/custom_button.dart';
 import 'package:instattendance_admin/widget/show_toast.dart';
 
@@ -13,9 +14,7 @@ class ClassesManagement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Classes Management'),
-      ),
+      appBar: appbar('Classes Management', context),
       body: FutureBuilder(
         future: _classController
             .getAllClasses(), // function where you call your api

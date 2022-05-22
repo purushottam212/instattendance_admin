@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:instattendance_admin/controller/admin_controller.dart';
+import 'package:instattendance_admin/models/admin_model.dart';
 import 'package:instattendance_admin/view/homepage_view/home.dart';
 import 'package:instattendance_admin/widget/custom_button.dart';
 import 'package:instattendance_admin/widget/custom_heading.dart';
+import 'package:instattendance_admin/widget/show_toast.dart';
 
 class AuthenticationView extends StatelessWidget {
   AuthenticationView({Key? key}) : super(key: key);
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
+  final AdminController _adminController = Get.put(AdminController());
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,7 @@ class AuthenticationView extends StatelessWidget {
           ),
           const Padding(padding: EdgeInsets.only(top: 30.0)),
           Text('Admin Login',
-           style: GoogleFonts.ubuntu(fontSize: 20, color: Colors.indigo) ),
+              style: GoogleFonts.ubuntu(fontSize: 20, color: Colors.indigo)),
           const Padding(padding: EdgeInsets.only(top: 14.0)),
           Form(
               key: formKey,
@@ -76,12 +80,18 @@ class AuthenticationView extends StatelessWidget {
                 ],
               )),
           const Padding(padding: EdgeInsets.only(top: 20.0)),
-          CustomButton(
-              msg: 'Login',
-              icon: Icons.login,
-              onTap: () {
-                isValidForm(context);
-              }),
+          Obx(
+            () => _adminController.isLoading.value
+                ? const CircularProgressIndicator(
+                    color: Colors.indigoAccent,
+                  )
+                : CustomButton(
+                    msg: 'Login',
+                    icon: Icons.login,
+                    onTap: () {
+                      isValidForm(context);
+                    }),
+          )
         ])),
       ))),
     );
@@ -105,12 +115,23 @@ class AuthenticationView extends StatelessWidget {
     final FormState? state = formKey.currentState;
     if (state!.validate()) {
       print('vaild');
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const HomePage()), (route) => true);
-      /*_teacherController.authenticateTeacher(
-                    emailController.text, passwordController.text);*/
+      if (emailController.text.isNotEmpty &&
+          passwordController.text.isNotEmpty) {
+        adminAuth(emailController.text, passwordController.text, context);
+      } else {
+        DisplayMessage.showMsg('All Fields Are Required');
+      }
     } else {
       print('invalid');
+    }
+  }
+
+  adminAuth(String email, String password, BuildContext context) async {
+    Admin? admin = await _adminController.authenticateAdmin(email, password);
+    if (admin != null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const HomePage()),
+          (route) => false);
     }
   }
 }

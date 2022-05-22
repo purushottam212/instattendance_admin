@@ -8,7 +8,8 @@ class SubjectRepository {
   Future<Subject?> addSubject(Subject subject, String className) async {
     var body = jsonEncode({
       "name": subject.name,
-      "className": {"className": className}
+      "className": {"className": className},
+      "isPractical": subject.isPractical
     });
 
     var response = await http.post(
