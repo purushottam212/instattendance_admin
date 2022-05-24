@@ -9,7 +9,7 @@ class SubjectRepository {
     var body = jsonEncode({
       "name": subject.name,
       "className": {"className": className},
-      "isPractical": subject.isPractical
+      "practical": subject.isPractical
     });
 
     var response = await http.post(

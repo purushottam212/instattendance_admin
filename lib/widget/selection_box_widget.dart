@@ -12,31 +12,30 @@ class SelectionBox extends StatelessWidget {
   final Widget child;
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Row(
-        //mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // const Text('Class:'),
-          Container(
-            height: height * 0.07,
-            width: width * 0.33,
-            margin: const EdgeInsets.all(15.0),
-            padding: const EdgeInsets.all(3.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5), //color of shadow
-                  spreadRadius: 5, //spread radius
-                  blurRadius: 7, // blur radius
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Center(child: child),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // const Text('Class:'),
+        const SizedBox(width: 20),
+        Container(
+          height: height * 0.07,
+          width: width * 0.33,
+          margin: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(3.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5), //color of shadow
+                spreadRadius: 5, //spread radius
+                blurRadius: 7, // blur radius
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-        ],
-      ),
+          child: Center(child: child),
+        ),
+      ],
     );
   }
 }

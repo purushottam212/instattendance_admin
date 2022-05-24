@@ -7,6 +7,7 @@ class StudentController extends GetxController {
   final StudentService _studentService = StudentService();
 
   var studentsByClassAndDiv = List<Student1>.empty(growable: true).obs;
+  var studentsByBatch = List<Student1>.empty(growable: true).obs;
 
   Future<Student?> addStudent(Student s) async {
     return await _studentService.addStudent(s);
@@ -25,5 +26,17 @@ class StudentController extends GetxController {
 
   Future<String> deleteStudent(String rollNo) async {
     return _studentService.deleteStudent(rollNo);
+  }
+
+  Future<List<Student1>?> getStudentsByBatch(String batchName) async {
+    List<Student1>? stList;
+
+    stList = await _studentService.getStudentsByBatch(batchName);
+
+    if (stList != null) {
+      studentsByBatch.assignAll(stList);
+      return stList;
+    }
+    return null;
   }
 }

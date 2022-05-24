@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:instattendance_admin/controller/class_controller.dart';
 import 'package:instattendance_admin/controller/division_controller.dart';
 import 'package:instattendance_admin/controller/notification_controller.dart';
+import 'package:instattendance_admin/controller/practical_batch_controller.dart';
 import 'package:instattendance_admin/controller/student_controller.dart';
 import 'package:instattendance_admin/widget/common_appbar.dart';
 import 'package:instattendance_admin/widget/drawer_navigation.dart';
 import 'package:instattendance_admin/widget/show_toast.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,6 +21,9 @@ class _HomePageState extends State<HomePage> {
   final StudentController _studentController = Get.put(StudentController());
   final ClassController _classController = Get.put(ClassController());
   final DivisionController _divisionController = Get.put(DivisionController());
+  final PracticalBatchController _practicalBatchController =
+      Get.put(PracticalBatchController());
+
   final NotificationController _notificationController =
       Get.put(NotificationController());
 
@@ -67,15 +72,19 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, index) {
                           return ExpansionTile(
                             childrenPadding: const EdgeInsets.all(12),
-                            title: Text(
-                                "${_notificationController.notificationsList[index].date}"),
+                            title: Text(DateFormat('yyyy-MM-dd – kk:mm aa')
+                                .format(_notificationController
+                                    .notificationsList[index].date!)
+                                .toString()),
                             children: [
                               Text(
                                   "send by :  ${_notificationController.notificationsList[index].teacher}"),
                               Text(
                                   "sender email:   ${_notificationController.notificationsList[index].teacherEmail}"),
                               Text(
-                                  "message : ${_notificationController.notificationsList[index].message}"),
+                                "message : ${_notificationController.notificationsList[index].message}",
+                                textAlign: TextAlign.center,
+                              ),
                               Align(
                                 alignment: Alignment.bottomRight,
                                 child: IconButton(

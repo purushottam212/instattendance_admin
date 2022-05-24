@@ -10,6 +10,7 @@ class StudentRepository {
       "rollNo": student.rollNo,
       "prnNo": student.prnNo,
       "name": student.name,
+      "practicalBatch": student.practicalBatch,
       "studentClass": student.studentClass,
       "studentDivision": student.studentDivision
     });
@@ -61,4 +62,22 @@ class StudentRepository {
 
     return 'something went wrong';
   }
+
+  Future<List<Student1>?> getStudentsByBatch(String batchName) async {
+    var response = await http.get(
+      Uri.parse('${RepositoryConstants.baseUrl}/students/batch/$batchName'),
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == RepositoryConstants.statusSuccessful &&
+        response.body.isNotEmpty) {
+      return student1ListFromJson(response.body);
+    }
+    RepositoryConstants.validateErrorCodes(response.statusCode);
+    return null;
+  }
+
+  
 }

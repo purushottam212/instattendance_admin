@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:instattendance_admin/models/practical_batch_model.dart';
 import 'package:instattendance_admin/view/entities_management/class/classes_management.dart';
 import 'package:instattendance_admin/view/entities_management/division/divisions_management.dart';
 import 'package:instattendance_admin/view/entities_management/student/student_management.dart';
 import 'package:instattendance_admin/view/entities_management/subject/subject_management.dart';
 import 'package:instattendance_admin/view/entities_management/teacher/teacher_management.dart';
 import 'package:instattendance_admin/view/homepage_view/home.dart';
+import 'package:instattendance_admin/view/pratical_batch_management/batches_page.dart';
 import 'package:instattendance_admin/view/settings_view/settings.dart';
 
 class NavDrawer extends StatelessWidget {
@@ -127,9 +129,25 @@ class NavDrawer extends StatelessWidget {
                       const SubjectsManagement()));
             },
           ),
+           const Divider(
+            color: Colors.grey,
+          ),
+          ListTile(
+            title: const Text("Batches Management"),
+            leading: IconButton(
+              icon: const Icon(Icons.manage_accounts),
+              onPressed: () {},
+            ),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) =>const PracticalBatchPage()));
+            },
+          ),
           const Divider(
             color: Colors.grey,
           ),
+        
           ListTile(
             title: const Text("Settings"),
             leading: IconButton(

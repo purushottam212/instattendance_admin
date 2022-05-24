@@ -1,23 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instattendance_admin/controller/practical_batch_controller.dart';
 import 'package:instattendance_admin/controller/student_controller.dart';
+import 'package:instattendance_admin/models/practical_batch_model.dart';
 import 'package:instattendance_admin/models/student1.dart';
 import 'package:instattendance_admin/models/student_model.dart';
 import 'package:instattendance_admin/widget/custom_button.dart';
+import 'package:instattendance_admin/widget/selection_box_widget.dart';
 import 'package:instattendance_admin/widget/show_toast.dart';
 
-class AddStudentForm extends StatelessWidget {
+class AddStudentForm extends StatefulWidget {
   AddStudentForm(
       {Key? key, required this.selectedClass, required this.selectedDiv})
       : super();
-  final StudentController _studentController = Get.find();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _prnController = TextEditingController();
-  final TextEditingController _rollController = TextEditingController();
   final String selectedClass;
   final String selectedDiv;
+
+  @override
+  State<AddStudentForm> createState() => _AddStudentFormState();
+}
+
+class _AddStudentFormState extends State<AddStudentForm> {
+  final StudentController _studentController = Get.find();
+
+  final TextEditingController _nameController = TextEditingController();
+
+  final TextEditingController _prnController = TextEditingController();
+
+  final TextEditingController _rollController = TextEditingController();
+
+  final PracticalBatchController _practicalBatchController = Get.find();
+
+  String selectedBatch = '';
+  @override
+  void initState() {
+    getPracticalBatches();
+    super.initState();
+  }
+
+  getPracticalBatches() async {
+    await _practicalBatchController.getPracticalBatches(
+        widget.selectedClass, widget.selectedDiv);
+    if (this.mounted) {
+      setState(() {
+        // Your state change code goes here
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Container(
         padding:
@@ -96,6 +130,47 @@ class AddStudentForm extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 80,
+                    child: SelectionBox(
+                      height: height,
+                      width: width,
+                      child: DropdownButton<PracticalBatch>(
+                        hint: selectedBatch == ''
+                            ? const Text(
+                                'select Batch',
+                                style: TextStyle(fontSize: 12),
+                              )
+                            : Text(selectedBatch.toString(),
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black)),
+                        items: _practicalBatchController.batchList.isEmpty
+                            ? null
+                            : _practicalBatchController.batchList
+                                .map((PracticalBatch value) {
+                                return DropdownMenuItem<PracticalBatch>(
+                                  value: value,
+                                  child: Text(value.batchName.toString()),
+                                );
+                              }).toList(),
+                        onChanged: (batch) {
+                          setState(() {
+                            selectedBatch = batch!.batchName.toString();
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               CustomButton(
                 msg: 'Add Student',
                 icon: Icons.add,
@@ -114,19 +189,22 @@ class AddStudentForm extends StatelessWidget {
     if (_nameController.text.isNotEmpty &&
         _prnController.text.isNotEmpty &&
         _rollController.text.isNotEmpty) {
-      StudentClass sc = StudentClass(className: selectedClass, students: []);
+      StudentClass sc =
+          StudentClass(className: widget.selectedClass, students: []);
       print(sc.className);
-      print(selectedClass);
-      print(selectedDiv);
-
+      print(widget.selectedClass);
+      print(widget.selectedDiv);
+   
       StudentDivision sd =
-          StudentDivision(divisionName: selectedDiv, students: []);
+          StudentDivision(divisionName: widget.selectedDiv, students: []);
       print(sd.divisionName);
       Student s1 = Student(
           prnNo: _prnController.text,
           rollNo: _rollController.text,
           name: _nameController.text,
-          studentClass: StudentClass(className: selectedClass, students: []),
+          practicalBatch: selectedBatch,
+          studentClass:
+              StudentClass(className: widget.selectedClass, students: []),
           studentDivision: sd);
 
       Student? addStud = await _studentController.addStudent(s1);
@@ -138,6 +216,8 @@ class AddStudentForm extends StatelessWidget {
         DisplayMessage.showMsg('student added');
         Navigator.of(context).pop();
       }
+    } else {
+      DisplayMessage.showMsg('All Fields Are Required');
     }
   }
 }

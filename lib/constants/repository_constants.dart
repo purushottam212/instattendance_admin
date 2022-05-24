@@ -5,7 +5,7 @@ class RepositoryConstants {
   static const int internalServerError = 500;
   static const int badRequest = 400;
   static const int timeout = 408;
-  static const String baseUrl = 'http://192.168.1.11:8080';
+  static const String baseUrl = 'http://192.168.1.4:8080';
 
   static validateErrorCodes(int statusCode) {
     if (statusCode == RepositoryConstants.timeout) {

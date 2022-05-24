@@ -77,7 +77,7 @@ class StudentList extends StatelessWidget {
                         ),
                         children: [
                           Text('PRN No : ${studList[index].prnNo}'),
-                          Text('Roll No : ${studList[index].rollNo}')
+                          Text('Roll No : ${studList[index].rollNo}'),
                         ],
                       );
                     }),

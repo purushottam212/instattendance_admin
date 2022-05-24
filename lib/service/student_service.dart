@@ -43,4 +43,12 @@ class StudentService {
 
     return studentDeleted;
   }
+
+  Future<List<Student1>?> getStudentsByBatch(String batchName) async {
+    try {
+      return await _studentRepository.getStudentsByBatch(batchName);
+    } catch (e) {
+      DisplayMessage.showMsg(e.toString());
+    }
+  }
 }

@@ -16,6 +16,7 @@ class Student {
     required this.prnNo,
     required this.rollNo,
     required this.name,
+    required this.practicalBatch,
     required this.studentClass,
     required this.studentDivision,
   });
@@ -23,6 +24,7 @@ class Student {
   String prnNo;
   String rollNo;
   String name;
+  String practicalBatch;
   StudentClass studentClass;
   StudentDivision studentDivision;
 
@@ -30,6 +32,7 @@ class Student {
         prnNo: json["prnNo"],
         rollNo: json["rollNo"],
         name: json["name"],
+        practicalBatch: json["practicalBatch"],
         studentClass: StudentClass.fromJson(json["studentClass"]),
         studentDivision: StudentDivision.fromJson(json["studentDivision"]),
       );
@@ -38,6 +41,7 @@ class Student {
         "prnNo": prnNo,
         "rollNo": rollNo,
         "name": name,
+        "practicalBatch": practicalBatch,
         "studentClass": studentClass.toJson(),
         "studentDivision": studentDivision.toJson(),
       };
